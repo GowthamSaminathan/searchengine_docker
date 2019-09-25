@@ -1,0 +1,21 @@
+# Before built the image create volume redis_db using below command
+
+        sudo docker volume create --driver local --name redis_db
+
+# Building the image
+
+        sudo docker build . --tag redis_server:v1 --file redis_docfile
+
+# Run the Container
+        sudo docker run -it -p 6379:6379/tcp --env-file ./env.list --name redis_server -h redis_server -d redis_server:v1
+
+# Exec the container
+        sudo docker exec -it redis_server /bin/bash
+
+#Stop the container
+        sudo docker stop redis_server
+
+# Start the container
+        sudo docker start redis_server
+
+# redis Logs are stored in docker logs ( sudo docker logs redis_server )

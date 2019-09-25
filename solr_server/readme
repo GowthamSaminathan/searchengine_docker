@@ -1,0 +1,48 @@
+
+# Download the solr-7.7.2 and extract it to current directory
+	wget http://apachemirror.wuchna.com/lucene/solr/7.7.2/solr-7.7.2.tgz
+	tar zxvf solr-7.7.2.tgz
+	rm -f solr-7.7.2.tgz
+
+# Make sure below commands are executed @ first time of cluster
+./solr zk mkroot /solr -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+./solr zk cp ../server/solr/solr.xml zk:solr/solr.xml -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+./solr zk cp -r ../server/solr/configsets/template_ok zk:solr/configs/ -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+
+
+
+# PLEASE CHANGE the env.list file with required server names
+
+WEBR_SOLR=solr start -c -t /solr_cloud_db -z server1.webr-env01.xyz:2181,server2.webr-env01.xyz:2181/solr -h server2.webr-env01.xyz -force
+
+	# -h is the current hostname , -z Zookeeper server 
+
+# Before built the image create volume solr_cloud_db using below command
+
+	sudo docker volume create --driver local --name solr_cloud_db
+
+# Building the image
+
+	sudo docker build . --tag solr_cloud:v1 --file solr_cloud_docfile
+
+# Build the container
+
+sudo docker container create -p 8983:8983/tcp --env-file ./env.list --mount source=solr_cloud_db,target=/solr_cloud_db/ --name solr_cloud -h solr_cloud solr_cloud:v1
+
+# Copy configuration files to container
+sudo docker cp ./config_files/solr.xml solr_cloud:/solr_server/solr-7.7.2/server/solr/solr.xml
+sudo docker cp ./config_files/template_ok solr_cloud:/solr_server/solr-7.7.2/server/solr/configsets/
+
+# Start the container
+	sudo docker start solr_cloud
+
+# Exec the container
+	sudo docker exec -it solr_cloud /bin/bash
+
+#Stop the container
+	sudo docker stop solr_cloud
+
+
+# Copy files to ZK from solr
+./solr zk cp -r ../server/solr/configsets/template_ok/solrconfig.xml zk:solr/configs/priya_wisky/solrconfig.xml -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+

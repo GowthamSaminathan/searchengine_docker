@@ -1,0 +1,47 @@
+# Version : 19_05_25
+# Current stable nginx
+#FROM sgowtham441/s_nginx_base_1.14.0:v1
+
+FROM ubuntu:18.04
+
+MAINTAINER gowtham
+
+RUN apt update && apt install -y \
+        nginx
+
+# =========== Python server start ===========
+
+RUN apt install software-properties-common -y
+RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt install python3.7 -y
+
+COPY ./get-pip.py /get-pip.py
+RUN python3.7 /get-pip.py
+
+RUN apt install python3.7-dev -y
+
+RUN apt install build-essential libssl-dev libffi-dev -y
+
+RUN pip3 install pymongo requests redis aiohttp bs4 html5lib urlmatch url_normalize validators
+
+# =========== Python End ===================
+
+
+# Creating local temp volume
+VOLUME ["/engine"]
+
+COPY ./search_engine/engine/ /engine
+
+#Stating Service
+COPY start.sh /start.sh
+RUN chmod 7777 /start.sh
+
+#Clean stop
+COPY clean.sh /clean.sh
+RUN chmod 7777 /clean.sh
+
+#Setting Environment
+
+#ENV
+
+CMD ["/start.sh"]

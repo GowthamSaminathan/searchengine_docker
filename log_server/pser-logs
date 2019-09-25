@@ -1,0 +1,30 @@
+/var/log/pser-log/pser-engine.log {
+    su root adm
+    maxsize 25M
+    hourly
+    rotate 25
+    compress
+    postrotate
+        kill -HUP $(cat /var/run/rsyslogd.pid) >/dev/null 2>&1 || true
+    endscript
+}
+/var/log/pser-log/pser-portal.log {
+    su root adm
+    maxsize 25M
+    hourly
+    rotate 25
+    compress
+    postrotate
+	kill -HUP $(cat /var/run/rsyslogd.pid) >/dev/null 2>&1 || true
+    endscript
+}
+/var/log/pser-log/pser-startup.log {
+    su root adm
+    maxsize 25M
+    hourly
+    rotate 25
+    compress
+    postrotate
+        kill -HUP $(cat /var/run/rsyslogd.pid) >/dev/null 2>&1 || true
+    endscript
+}

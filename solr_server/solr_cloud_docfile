@@ -1,0 +1,26 @@
+# Version : 19_05_25
+
+FROM ubuntu:18.04
+
+MAINTAINER gowtham
+
+RUN apt update -y
+
+RUN apt install openjdk-11-jdk lsof -y
+
+VOLUME ["/solr_server"]
+
+COPY ./solr-7.7.2 /solr_server/solr-7.7.2
+
+#Stating Service
+COPY start.sh /start.sh
+RUN chmod 7777 /start.sh
+
+#Clean stop
+COPY clean.sh /clean.sh
+RUN chmod 7777 /clean.sh
+
+EXPOSE 8983
+
+CMD ["/start.sh"]
+

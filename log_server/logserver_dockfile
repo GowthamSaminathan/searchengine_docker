@@ -1,0 +1,27 @@
+# Version : 11-Aug-2019
+# RSYSLOG
+# Req : pser-log VOLUME need to create
+
+FROM sgowtham441/rsyslog_server:v1
+MAINTAINER gowtham
+
+#VOLUME pser-log /var/log/pser-log 
+
+COPY ./50-default.conf /etc/rsyslog.d/50-default.conf
+COPY ./pser-logs /etc/logrotate.d/pser-logs
+COPY ./rsyslog.conf /etc/rsyslog.conf
+
+RUN chmod 0644 /etc/logrotate.d/pser-logs
+
+EXPOSE 10514/udp
+EXPOSE 10514/tcp
+
+#Stating Service
+COPY start.sh /start.sh
+RUN chmod 7777 /start.sh
+
+#Clean stop
+COPY clean.sh /clean.sh
+RUN chmod 7777 /clean.sh
+
+CMD ["/start.sh"]

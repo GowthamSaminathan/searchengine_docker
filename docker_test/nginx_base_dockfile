@@ -1,0 +1,9 @@
+# Version : 19_05_25
+# Current stable nginx
+FROM ubuntu:18.04
+MAINTAINER gowtham
+
+RUN apt update && apt install -y \
+	nginx
+
+RUN apt install -y php-fpm

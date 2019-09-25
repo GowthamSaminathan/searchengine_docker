@@ -1,0 +1,38 @@
+# Clone latest commit into current working directory
+	git clone https://gowthams6666@bitbucket.org/webr_search/admin-portal.git
+	git clone https://gowthams6666@bitbucket.org/asters/search_engine.git
+
+# Before built the image create volume webserver-log,nginx-log using below command
+# webserver-log used for python gateway and startup,stop logs
+# Note : php-fpm logs are still in container storage : /var/log/php7.2-fpm.log ( Log will lost once container destroied )
+
+	sudo docker volume create --driver local --name webserver-log
+	sudo docker volume create --driver local --name nginx-log
+
+# Building the image
+	sudo docker build . --tag webserver_local:v1 --file webserver_docfile
+
+# Run the Container
+	
+	sudo docker run -it -p 80:80/tcp --mount source=nginx-log,target=/var/log/nginx/ --mount source=webserver-log,target=/var/log/webserver-log/ \
+--name webserver_local --env-file ./env.list -h webserver_local -d webserver_local:v1
+
+
+# Exec the container
+	sudo docker exec -it webserver_local /bin/bash
+
+#Stop the container
+	sudo docker stop webserver_local
+
+# Start the container
+	sudo docker start webserver_local
+
+
+# Developer note : 
+
+Copy file using "docker cp" once file modified
+
+sudo docker cp api_server.py webserver_local:/webr_api/api_server.py
+
+# Restart the service to take effect
+sudo docker restart webserver_local

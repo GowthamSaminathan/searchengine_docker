@@ -1,0 +1,30 @@
+# Clone latest commit into current working directory
+	git clone https://gowthams6666@bitbucket.org/asters/search_engine.git
+
+# Building the image
+	sudo docker build . --tag crawl_engine:v1 --file crawl_engine_docfile
+
+# Run the Container
+	
+	sudo docker run -it --env-file ./env.list --name crawl_engine -h crawl_engine -d crawl_engine:v1
+
+# Exec the container
+	sudo docker exec -it crawl_engine /bin/bash
+
+#Stop the container
+	sudo docker stop crawl_engine
+
+# Start the container
+	sudo docker start crawl_engine
+
+# Developer note :
+
+Copy file using "docker cp" once file modified
+
+sudo docker cp Engine_Head.py crawl_engine:/engine/Engine_Head.py
+
+# Restart the service to take effect
+sudo docker restart webserver_local
+
+
+

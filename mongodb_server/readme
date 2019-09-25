@@ -1,0 +1,60 @@
+# Global Database creation
+
+# Before built the image create volume mongo_db using below command
+
+	sudo docker volume create --driver local --name mongo_db
+
+# Building the image
+
+	sudo docker build . --tag mongo_server:v1 --file mongo_server_docfile
+
+# Run the Container
+	# environment password will only work if DB not present in the path
+	
+
+	sudo docker run -it -p 27017:27017/tcp --env-file ./env.list \
+    --name mongo_server -h mongo_server --mount source=mongo_db,target=/data/db \
+    -d mongo_server:v1 --config /etc/mongod.conf
+
+# Exec the container
+	sudo docker exec -it mongo_server /bin/bash
+
+#Stop the container
+	sudo docker stop mongo_server
+
+# Start the container
+	sudo docker start mongo_server
+
+# Mongodb Logs are stored in docker logs ( sudo docker logs mongo_server )
+
+==============================================================================================
+
+# Local DB
+
+# Before built the image create volume mongo_db using below command
+
+	sudo docker volume create --driver local --name local_mongo_db
+
+# Building the image
+
+	sudo docker build . --tag local_mongo_server:v1 --file mongo_server_docfile
+
+# Run the Container
+	# environment password will only work if DB not present in the path
+	# Change the mount source based on "mongo_db" or local_mongo_db
+	# Mapped port 37017 for local_mongo_db
+
+	sudo docker run -it -p 37017:27017/tcp --env-file ./env.list \
+    --name local_mongo_server -h local_mongo_server --mount source=local_mongo_db,target=/data/db \
+    -d local_mongo_server:v1 --config /etc/mongod.conf
+
+# Exec the container
+	sudo docker exec -it local_mongo_server /bin/bash
+
+#Stop the container
+	sudo docker stop local_mongo_server
+
+# Start the container
+	sudo docker start local_mongo_server
+
+# Mongodb Logs are stored in docker logs ( sudo docker logs local_mongo_server )

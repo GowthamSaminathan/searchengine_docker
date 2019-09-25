@@ -1,0 +1,22 @@
+# Hints
+
+
+############ Chain Traversal Order #################### https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture
+
+Incoming packets destined for the local system: PREROUTING -> INPUT
+Incoming packets destined to another host: PREROUTING -> FORWARD -> POSTROUTING
+Locally generated packets: OUTPUT -> POSTROUTING
+
+
+# View Forward rules
+sudo iptables -t filter -L FORWARD --line-numbers -n
+
+# Insert into specific line
+
+sudo iptables -I FORWARD 1 -p tcp --dport 8983 -j DROP
+
+# Delete the line
+
+sudo iptables -D FORWARD 1
+
+

@@ -1,0 +1,22 @@
+# This Image is clone from https://github.com/31z4/zookeeper-docker ( Docker official image )
+# Image version 3.5.5 Commit : 0575bfbfff5da497028560ce26ae42a75ef7bd62
+# For more read orginal git readme (https://github.com/31z4/zookeeper-docker/blob/master/README.md)
+
+### PLEASE CHECK env.list and change ZOO_MY_ID and ZOO_SERVERS before run #########
+
+# Building the image
+
+	sudo docker build . --tag zookeeper:v1 --file Dockerfile
+
+# Run the Container
+	
+	sudo docker run -it -p 2181:2181/tcp -p 2888:2888/tcp -p 3888:3888/tcp -p 8080:8080/tcp --env-file ./env.list --mount source=zookeeper_db,target=/zookeeper_db/ --name zookeeper -h zookeeper -d zookeeper:v1
+
+# Exec the container
+	sudo docker exec -it zookeeper /bin/bash
+
+#Stop the container
+	sudo docker stop zookeeper
+
+# Start the container
+	sudo docker start zookeeper
