@@ -1,0 +1,45 @@
+# Clone the last commit from git
+
+# Basic settings in host server
+
+1) Add the DNS name in the global DNS server ( godady.com)
+2) Change the hostname - /etc/hostname and sudo hostname <server{n}>
+3) Add 0.0.0.0 in /etc/hosts file with current servername ex:0.0.0.0 server2.webr-env01.xyz
+
+
+
+# Application Start flow - Start the application based on below flow#
+
+1) log_server
+2) zookeeper_server
+3) solr_server
+4) redis_server
+5) mongodb_server - local DB instance
+6) mongodb_server - Global DB instance ( If required )
+7) crawl_engine
+8) web_server
+
+
+# Zookeeper and Solr version need to match Visit : https://lucene.apache.org/solr/guide/7_7/setting-up-an-external-zookeeper-ensemble.html#download-apache-zookeeper
+
+
+# Firewall Configuration : 
+
+Disable docker iptable :
+  sudo nano /etc/docker/daemon.json -> 
+{
+"iptables": false
+}
+
+# Ufw Configuration:
+
+sudo ufw allow from any to any port 22
+sudo ufw allow from 13.127.18.62 to any port 2181
+sudo ufw allow from 13.127.18.62 to any port 2888
+sudo ufw allow from 13.127.18.62 to any port 3888
+sudo ufw allow from 13.127.18.62 to any port 8983
+sudo ufw allow from 13.127.18.62 to any port 27017
+
+sudo ufw status numbered
+sudo ufw delete 7
+
