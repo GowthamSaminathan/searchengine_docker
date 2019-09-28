@@ -293,15 +293,7 @@
       </analyzer>
     </fieldType>
 
-  <fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
-  <analyzer>
-    <tokenizer class="solr.StandardTokenizerFactory"/>
-    <filter class="solr.StandardFilterFactory"/>
-    <filter class="solr.LowerCaseFilterFactory"/>
-  </analyzer>
-  </fieldType>    
-
-
+    
     <!-- SortableTextField generaly functions exactly like TextField,
          except that it supports, and by default uses, docValues for sorting (or faceting)
          on the first 1024 characters of the original field values (which is configurable).
@@ -1007,5 +999,13 @@
        <str name="paramkey">param value</str>
      </similarity>
     -->
+
+<fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
+  <analyzer>
+    <tokenizer class="solr.StandardTokenizerFactory"/>
+    <filter class="solr.StandardFilterFactory"/>
+    <filter class="solr.LowerCaseFilterFactory"/>
+  </analyzer>
+</fieldType>
 
 </schema>
