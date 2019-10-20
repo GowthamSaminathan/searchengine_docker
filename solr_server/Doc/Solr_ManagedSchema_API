@@ -1,0 +1,6 @@
+
+Get managed schema : http://server2.webr-env01.xyz:8983/solr/priya_engine_test/schema 
+		     (http://server2.webr-env01.xyz:8983/solr/priya_engine_test/schema?wt=xml)
+
+Get fields in schema : http://server2.webr-env01.xyz:8983/solr/priya_engine_test/schema/fields
+
