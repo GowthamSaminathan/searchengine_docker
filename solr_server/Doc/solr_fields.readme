@@ -1,0 +1,32 @@
+# Adding Solr custome fields (body and text) using API
+
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field":{
+     "name":"body",
+     "multiValued":true,
+     "type":"text_general",
+     "stored":true,
+     "indexed":true
+      }
+}' http://172.17.0.4:8983/solr/priya_engine_test/schema
+
+
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "add-field":{
+     "name":"domain",
+     "multiValued":false,
+     "type":"text_general",
+     "stored":true,
+     "indexed":true
+      }
+}' http://172.17.0.4:8983/solr/priya_engine_test/schema
+
+
+# Deleting the field 
+
+curl -X POST -H 'Content-type:application/json' --data-binary '{
+  "delete-field":{
+     "name":"body"
+      }
+}' http://172.17.0.4:8983/solr/priya_engine_test/schema
+

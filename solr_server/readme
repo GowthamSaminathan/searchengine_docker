@@ -29,10 +29,6 @@ WEBR_SOLR=solr start -c -t /solr_cloud_db -z server1.webr-env01.xyz:2181,server2
 
 sudo docker container create -p 8983:8983/tcp --env-file ./env.list --mount source=solr_cloud_db,target=/solr_cloud_db/ --name solr_cloud -h solr_cloud solr_cloud:v1
 
-# Copy configuration files to container
-sudo docker cp ./config_files/solr.xml solr_cloud:/solr_server/solr-7.7.2/server/solr/solr.xml
-sudo docker cp ./config_files/template_ok solr_cloud:/solr_server/solr-7.7.2/server/solr/configsets/
-
 # Start the container
 	sudo docker start solr_cloud
 
@@ -43,6 +39,33 @@ sudo docker cp ./config_files/template_ok solr_cloud:/solr_server/solr-7.7.2/ser
 	sudo docker stop solr_cloud
 
 
-# Copy files to ZK from solr
-./solr zk cp -r ../server/solr/configsets/template_ok/solrconfig.xml zk:solr/configs/priya_wisky/solrconfig.xml -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+#Tips:
+
+#Copy modified files from Zookeeper to Solr server
+
+mkdir /solr_server/solr-7.7.2/bin/tmp
+cd /solr_server/solr-7.7.2/bin/tmp
+
+../solr zk cp zk:/solr/configs/priya_engine_test/managed-schema ./managed-schema -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+../solr zk cp zk:/solr/configs/priya_engine_test/configoverlay.json ./configoverlay.json -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+../solr zk cp zk:/solr/configs/_default/solrconfig.xml ./solrconfig.xml -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+
+
+#Copy modified files from solr server to local
+
+cd ~/searchengine_docker/solr_server/config_files/template_ok
+
+sudo docker cp solr_cloud:/solr_server/solr-7.7.2/bin/tmp/configoverlay.json ./
+sudo docker cp solr_cloud:/solr_server/solr-7.7.2/bin/tmp/managed-schema ./
+sudo docker cp solr_cloud:/solr_server/solr-7.7.2/bin/tmp/solrconfig.xml ./
+
+# Removing template_ok files from zookeeper
+
+./solr zk rm -r zk:/solr/configs/template_ok -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+
+# ADD template_ok to zookeeper
+
+sudo docker cp template_ok/ solr_cloud:/solr_server/solr-7.7.2/bin/tmp/.
+
+../solr zk cp -r ./template_ok zk:solr/configs/ -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
 

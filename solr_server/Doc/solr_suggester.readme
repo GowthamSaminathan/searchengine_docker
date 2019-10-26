@@ -1,0 +1,74 @@
+
+# Adding Suggester to configuration file ( This setting will stored in : configoverlay.json)
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"add-searchcomponent":
+{
+ "name":"webr_suggest",
+ "class":"solr.SuggestComponent",
+ "suggester":[{
+ "name":"body_suggest",
+ "lookupImpl":"AnalyzingInfixLookupFactory",
+ "dictionaryImpl":"DocumentDictionaryFactory",
+ "field":"body",
+ "suggestAnalyzerFieldType":"text_general",
+ "buildOnStartup":"false",
+ "allTermsRequired":"false"
+ },
+{
+ "name":"title_suggest",
+ "lookupImpl":"AnalyzingInfixLookupFactory",
+ "dictionaryImpl":"DocumentDictionaryFactory",
+ "field":"title",
+ "suggestAnalyzerFieldType":"text_general",
+ "buildOnStartup":"false",
+ "allTermsRequired":"false"
+ }
+ ]}'
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"add-requesthandler": {
+"name":"/webr_suggest",
+"startup":"lazy",
+"class":"solr.SearchHandler",
+"defaults":{
+	"suggest":"true",
+	"suggest.count":"10"
+	},
+"components":["webr_suggest"]
+}'
+
+=====================================================
+
+# Deleting the suggester and suggest request handeler
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"delete-requesthandler": "/webr_suggest"'
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"delete-searchcomponent": "webr_suggest"'
+
+=====================================================
+
+# Accessing URL : http://server2.webr-env01.xyz:8983/solr/priya_engine_test/webr_suggest?suggest=true&suggest.build=true&suggest.dictionary=title_suggest&suggest.dictionary=body_suggest&suggest.q=gov
+
+======================================================
+# Suggester issues : when implementing suggester with following setting suggester got failed
+
+Not working :
+
+ "lookupImpl":"FuzzyLookupFactory",
+ "dictionaryImpl":"DocumentDictionaryFactory", 
+ "field":"body"
+
+Working:
+
+"lookupImpl":"AnalyzingInfixLookupFactory",
+ "dictionaryImpl":"DocumentDictionaryFactory",
+ "field":"body",
+
+Workaround provided by :
+(reference : http://mail-archives.apache.org/mod_mbox/lucene-solr-user/201804.mbox/%3CCAJU9nmjOebxhJWKgo6SfJfkR7Dz1OTN+HoL0cCpU8UEjVKTjtQ@mail.gmail.com%3E)
+
+=========================================
+Next : Need to check 'suggest.build' ( it will slow down the query)

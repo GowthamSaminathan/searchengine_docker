@@ -1,0 +1,58 @@
+# Adding spellchecker search component
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"add-searchcomponent":
+{
+ "name":"webr_spellcheck",
+ "class":"solr.SpellCheckComponent",
+ "spellchecker":[{
+ "name":"body_spellcheck",
+ "field":"body",
+ "classname":"solr.DirectSolrSpellChecker",
+ "distanceMeasure":"internal",
+ "accuracy":0.5,
+ "maxEdits":2,
+ "minPrefix":1,
+ "maxInspections":5,
+ "minQueryLength":4,
+ "maxQueryFrequency":0.01,
+ "thresholdTokenFrequency":0.01
+ },{
+"name":"title_spellcheck",
+ "field":"title",
+ "classname":"solr.DirectSolrSpellChecker",
+ "distanceMeasure":"internal",
+ "accuracy":0.5,
+ "maxEdits":2,
+ "minPrefix":1,
+ "maxInspections":5,
+ "minQueryLength":4,
+ "maxQueryFrequency":0.01,
+ "thresholdTokenFrequency":0.01}
+ ]
+ }'
+===============================
+
+ # Request handeler
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"add-requesthandler": {
+"name":"/webr_spellcheck",
+"class":"org.apache.solr.handler.component.SearchHandler",
+"defaults":{"spellcheck.dictionary":["body_spellcheck","title_spellcheck"],"spellcheck.count":10},
+"last-components":["webr_spellcheck"]
+}'
+
+================================
+
+# Delete the request
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"delete-requesthandler": "/webr_spellcheck"'
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"delete-searchcomponent": "webr_spellcheck"'
+
+
+=================================
+http://server2.webr-env01.xyz:8983/api/collections/priya_engine_test/webr_spellcheck?spellcheck=true&spellcheck.build=true&spellcheck.q=governmant&shards.qt=/webr_spellcheck&shards=server2.webr-env01.xyz:8983/solr/priya_engine_test,server3.webr-env01.xyz:8983/solr/priya_engine_test
