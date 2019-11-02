@@ -1,0 +1,28 @@
+#### CURRENTLY WE ARE NOT USING THIS ########
+
+#  Used to elevate the give document 
+
+
+# Adding search component
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"add-searchcomponent":
+{
+    "name": "webr_elevator",
+    "class": "solr.QueryElevationComponent",
+    "webr_elevator":{
+    "queryFieldType": "string",
+    "config-file": "elevate.xml"
+    }
+}'
+
+# Adding Request handler 
+
+curl http://172.17.0.4:8983/api/collections/priya_engine_test/config -H 'Content-type:application/json' -d '
+"add-requesthandler": {
+"name":"/webr_elevator",
+"class":"solr.SearchHandler",
+"defaults":{"echoParams":"explicit"},
+"last-components":["webr_elevator"]
+}'
+

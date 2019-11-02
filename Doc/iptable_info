@@ -1,3 +1,54 @@
+ 259  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  261  sudo iptables -I DOCKER-USER 1 -s 172.17.0.0/16 -j RETURN
+  262  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  263  sudo iptables -I DOCKER-USER 1 -d 172.17.0.0/16 -j RETURN
+  264  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  265  sudo iptables -I DOCKER-USER 1 -p tcp --dport 80 -j RETURN
+  266  sudo iptables -I DOCKER-USER 1 -p tcp --dport 443 -j RETURN
+  267  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  268  history | i "iptable I"
+  270  iptables --list --line-number -v
+  271  sudo iptables --list --line-number -v
+  272  sudo iptables --list
+  273  sudo iptables --list --line-number
+  274  sudo iptables -t filter -L FORWARD --line-numbers -n
+  275  sudo iptables -t filter -L FORWARD --line-numbers
+  276  sudo iptables -t --line-numbers
+  277  sudo iptables --line-numbers
+  278  sudo iptables -t filter -L FORWARD --line-numbers
+  279  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  280  sudo iptables -I DOCKER-USER 1 -p tcp --dport 8983 -j DROP
+  281  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  282  sudo iptables -I DOCKER-USER 1 -p tcp --dport 2888 -j DROP
+  283  sudo iptables -I DOCKER-USER 1 -p tcp --dport 2181 -j DROP
+  284  sudo iptables -I DOCKER-USER 1 -p tcp --dport 6379 -j DROP
+  285  sudo iptables -I DOCKER-USER 1 -p tcp --dport 8983 -j DROP
+  286  sudo iptables -I DOCKER-USER 1 -p tcp --dport 27017 -j DROP
+  287  sudo iptables -I DOCKER-USER 1 -p tcp --dport 37017 -j DROP
+  288  sudo iptables -I DOCKER-USER 1 -p tcp --dport 10514 -j DROP
+  289  sudo iptables -I DOCKER-USER 1 -p udp --dport 10514 -j DROP
+  290  sudo iptables -I DOCKER-USER 1 -p tcp --dport 80 -j DROP
+  291  sudo iptables -I DOCKER-USER 1 -p tcp --dport 8080 -j DROP
+  292  sudo iptables -I DOCKER-USER 1 -p tcp --dport 3888 -j DROP
+  293  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 8983 -j RETURN
+  294  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  295  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 2888 -j RETURN
+  296  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 3888 -j RETURN
+  297  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 2181 -j RETURN
+  298  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 6379 -j RETURN
+  299  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 8983 -j RETURN
+  300  sudo iptables -I DOCKER-USER 1 -s 13.233.162.51 -p tcp --dport 27017 -j RETURN
+  301  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  302  sudo iptables -I DOCKER-USER 1 -s any -p tcp --dport 8983 -j RETURN
+  303  sudo iptables -I DOCKER-USER 1 -p tcp --dport 8983 -j RETURN
+  304  sudo iptables -t filter -L DOCKER-USER --line-numbers -n
+  309  history | grep iptable
+
+
+####################### OLD #####################
+
+
+
 # Hints
 
 
