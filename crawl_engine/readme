@@ -1,5 +1,5 @@
 # Clone latest commit into current working directory
-	git clone https://gowthams6666@bitbucket.org/asters/search_engine.git
+	git clone https://github.com/GowthamSaminathan/search_engine.git
 
 # Building the image
 	sudo docker build . --tag crawl_engine:v1 --file crawl_engine_docfile

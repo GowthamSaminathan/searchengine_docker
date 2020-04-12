@@ -45,8 +45,8 @@ COPY uwsgi_ini.ini /webr_api/
 # Creating local temp volume
 VOLUME ["/var/www"]
 
-COPY ./admin-portal/html /var/www/html
-COPY ./admin-portal/pages /var/www/pages
+COPY ./searchengine_admin_portal/html /var/www/html
+COPY ./searchengine_admin_portal/pages /var/www/pages
 
 
 # ============ Nginx Configuration start ===============

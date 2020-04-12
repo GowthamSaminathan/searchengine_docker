@@ -1,6 +1,6 @@
 # Clone latest commit into current working directory
-	git clone https://gowthams6666@bitbucket.org/webr_search/admin-portal.git
-	git clone https://gowthams6666@bitbucket.org/asters/search_engine.git
+	git clone https://github.com/GowthamSaminathan/searchengine_admin_portal.git
+	git clone https://github.com/GowthamSaminathan/search_engine.git
 
 # Before built the image create volume webserver-log,nginx-log using below command
 # webserver-log used for python gateway and startup,stop logs
