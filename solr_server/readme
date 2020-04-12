@@ -39,6 +39,13 @@ sudo docker container create -p 8983:8983/tcp --env-file ./env.list --mount sour
 	sudo docker stop solr_cloud
 
 
+# ADD template_ok to zookeeper
+
+sudo docker cp ./config_files/template_ok/ solr_cloud:/solr_server/solr-7.7.2/bin/.
+sudo docker exec -it solr_cloud /bin/bash
+../solr zk cp -r ./template_ok zk:solr/configs/ -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
+
+
 #Tips:
 
 #Copy modified files from Zookeeper to Solr server
@@ -63,9 +70,4 @@ sudo docker cp solr_cloud:/solr_server/solr-7.7.2/bin/tmp/solrconfig.xml ./
 
 ./solr zk rm -r zk:/solr/configs/template_ok -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
 
-# ADD template_ok to zookeeper
-
-sudo docker cp template_ok/ solr_cloud:/solr_server/solr-7.7.2/bin/tmp/.
-
-../solr zk cp -r ./template_ok zk:solr/configs/ -z server3.webr-env01.xyz:2181,server2.webr-env01.xyz:2181
 
