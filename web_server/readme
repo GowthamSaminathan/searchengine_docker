@@ -17,6 +17,11 @@
 	sudo docker run -it -p 80:80/tcp --mount source=nginx-log,target=/var/log/nginx/ --mount source=webserver-log,target=/var/log/webserver-log/ \
 --name webserver_local --env-file ./env.list -h webserver_local -d webserver_local:v1
 
+# Run the Continer for develeoper
+
+sudo docker run -it -p 80:80/tcp --mount source=nginx-log,target=/var/log/nginx/ --mount source=webserver-log,target=/var/log/webserver-log/ --name webserver_local -v ~
+/searchengine_admin_portal:/var/www --env-file ./env.list -h webserver_local -d webserver_local:v1
+
 
 # Exec the container
 	sudo docker exec -it webserver_local /bin/bash
