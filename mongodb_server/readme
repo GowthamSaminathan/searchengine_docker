@@ -12,7 +12,7 @@
 	# environment password will only work if DB not present in the path
 	
 
-	sudo docker run -it -p 27017:27017/tcp --env-file ./env.list \
+	sudo docker run -it --net webr-network --ip 172.18.0.50 -p 27017:27017/tcp --env-file ./env.list \
     --name mongo_server -h mongo_server --mount source=mongo_db,target=/data/db \
     -d mongo_server:v1 --config /etc/mongod.conf
 
@@ -44,7 +44,7 @@
 	# Change the mount source based on "mongo_db" or local_mongo_db
 	# Mapped port 37017 for local_mongo_db
 
-	sudo docker run -it -p 37017:27017/tcp --env-file ./env.list \
+	sudo docker run -it --net webr-network --ip 172.18.0.60 -p 37017:27017/tcp --env-file ./env.list \
     --name local_mongo_server -h local_mongo_server --mount source=local_mongo_db,target=/data/db \
     -d local_mongo_server:v1 --config /etc/mongod.conf
 

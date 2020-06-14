@@ -7,7 +7,7 @@
         sudo docker build . --tag redis_server:v1 --file redis_docfile
 
 # Run the Container
-        sudo docker run -it -p 6379:6379/tcp --env-file ./env.list --name redis_server -h redis_server -d redis_server:v1
+        sudo docker run -it --net webr-network --ip 172.18.0.40 -p 6379:6379/tcp --env-file ./env.list --name redis_server -h redis_server -d redis_server:v1
 
 # Exec the container
         sudo docker exec -it redis_server /bin/bash

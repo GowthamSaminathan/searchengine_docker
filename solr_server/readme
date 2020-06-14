@@ -27,7 +27,7 @@ WEBR_SOLR=solr start -c -t /solr_cloud_db -z server1.webr-env01.xyz:2181,server2
 
 # Build the container
 
-sudo docker container create -p 8983:8983/tcp --env-file ./env.list --mount source=solr_cloud_db,target=/solr_cloud_db/ --name solr_cloud -h solr_cloud solr_cloud:v1
+sudo docker container create --net webr-network --ip 172.18.0.30 -p 8983:8983/tcp --env-file ./env.list --mount source=solr_cloud_db,target=/solr_cloud_db/ --name solr_cloud -h solr_cloud solr_cloud:v1
 
 # Start the container
 	sudo docker start solr_cloud

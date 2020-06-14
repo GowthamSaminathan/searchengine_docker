@@ -10,7 +10,7 @@
 
 # Run the Container
 	
-	sudo docker run -it -p 2181:2181/tcp -p 2888:2888/tcp -p 3888:3888/tcp -p 8080:8080/tcp --env-file ./env.list --mount source=zookeeper_db,target=/zookeeper_db/ --name zookeeper -h zookeeper -d zookeeper:v1
+	sudo docker run -it --net webr-network --ip 172.18.0.20 -p 2181:2181/tcp -p 2888:2888/tcp -p 3888:3888/tcp -p 8080:8080/tcp --env-file ./env.list --mount source=zookeeper_db,target=/zookeeper_db/ --name zookeeper -h zookeeper -d zookeeper:v1
 
 # Exec the container
 	sudo docker exec -it zookeeper /bin/bash

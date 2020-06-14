@@ -6,7 +6,7 @@
 
 # Run the Container
 	
-	sudo docker run -it --env-file ./env.list --name crawl_engine -h crawl_engine -d crawl_engine:v1
+	sudo docker run -it --net webr-network --ip 172.18.0.70 --env-file ./env.list --name crawl_engine -h crawl_engine -d crawl_engine:v1
 
 # Exec the container
 	sudo docker exec -it crawl_engine /bin/bash
