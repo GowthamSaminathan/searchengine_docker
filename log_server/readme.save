@@ -1,0 +1,13 @@
+# Before built the image create volume pser-log using below command
+   sudo docker volume create --driver local --name pser-log
+
+# Building the image
+	sudo docker build . --tag pser-syslog:v1 --file logserver_dockfile
+
+# Run the Container
+	sudo docker run -it --ip 172.17.100.10 exit
+-p 10514:10514/udp -p 10514:10514/tcp --mount source=pser-log,target=/var/log/pser-log --name pser-syslog -h pser-syslog -d pser-syslog:v1
+
+# Run the container
+	sudo docker exec -it pser-syslog /bin/bash
+

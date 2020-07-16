@@ -2,11 +2,19 @@
 
 FROM ubuntu:18.04
 
-MAINTAINER gowtham
+MAINTAINER "https://hub.docker.com/_/openjdk"
 
-RUN apt update -y
+RUN apt-get update -y
 
-RUN apt install openjdk-11-jdk lsof -y
+RUN apt-get install -y wget
+
+RUN wget https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c5c647/12/GPL/openjdk-14.0.2_linux-x64_bin.tar.gz
+
+RUN tar zxvf openjdk-14.0.2_linux-x64_bin.tar.gz
+
+ENV JAVA_HOME /jdk-14.0.2
+
+ENV PATH $JAVA_HOME/bin:$PATH
 
 VOLUME ["/solr_server"]
 
