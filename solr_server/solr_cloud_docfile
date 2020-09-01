@@ -12,13 +12,17 @@ RUN wget https://download.java.net/java/GA/jdk14.0.2/205943a0976c4ed48cb16f1043c
 
 RUN tar zxvf openjdk-14.0.2_linux-x64_bin.tar.gz
 
+RUN rm openjdk-14.0.2_linux-x64_bin.tar.gz
+
 ENV JAVA_HOME /jdk-14.0.2
 
 ENV PATH $JAVA_HOME/bin:$PATH
 
-VOLUME ["/solr_server"]
+RUN wget http://apachemirror.wuchna.com/lucene/solr/8.6.0/solr-8.6.0.tgz
 
-COPY ./solr-7.7.2 /solr_server/solr-7.7.2
+RUN tar zxvf solr-8.6.0.tgz
+
+RUN rm solr-8.6.0.tgz
 
 #Stating Service
 COPY start.sh /start.sh

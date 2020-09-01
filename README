@@ -23,6 +23,10 @@
 # Zookeeper and Solr version need to match Visit : https://lucene.apache.org/solr/guide/7_7/setting-up-an-external-zookeeper-ensemble.html#download-apache-zookeeper
 
 
+# Create network
+ 
+#sudo docker network create --driver bridge --subnet=172.18.0.0/24 webr-network
+
 # Firewall Configuration : 
 
 Disable docker iptable :

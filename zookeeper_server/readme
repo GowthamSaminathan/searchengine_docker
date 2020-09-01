@@ -8,15 +8,19 @@
 
 	sudo docker build . --tag zookeeper:v1 --file Dockerfile
 
-# Run the Container
-	
-	sudo docker run -it --net webr-network --ip 172.18.0.20 -p 2181:2181/tcp -p 2888:2888/tcp -p 3888:3888/tcp -p 8080:8080/tcp --env-file ./env.list --mount source=zookeeper_db,target=/zookeeper_db/ --name zookeeper -h zookeeper -d zookeeper:v1
+# Create the continer the Container
+
+sudo docker container create --net webr-network --ip 172.18.0.20 -p 2181:2181/tcp -p 2888:2888/tcp -p 3888:3888/tcp -p 8080:8080/tcp --env-file ./env.list --mount source=zookeeper_db,target=/zookeeper_db/ --name zookeeper -h zookeeper zookeeper:v1
+
+# Modify the zoo file then copy to container
+	# Copy Config file to container
+	sudo docker cp ./zoo.cfg zookeeper:/conf/
+
+# Start the container
+	sudo docker start zookeeper
 
 # Exec the container
 	sudo docker exec -it zookeeper /bin/bash
 
 #Stop the container
 	sudo docker stop zookeeper
-
-# Start the container
-	sudo docker start zookeeper
