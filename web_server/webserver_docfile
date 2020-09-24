@@ -31,7 +31,7 @@ RUN apt install python3.7-dev -y
 
 RUN apt install build-essential libssl-dev libffi-dev -y
 
-RUN pip3 install uwsgi flask flask_cors flask_pymongo requests redis cerberus
+RUN pip3 install uwsgi flask flask_cors flask_pymongo requests redis cerberus marshmallow
 
 VOLUME ["/webr_api"]
 
