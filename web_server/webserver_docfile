@@ -9,8 +9,11 @@ MAINTAINER gowtham
 RUN apt update && apt install -y \
         nginx
 
+#RUN apt install nginx -y
+
 # ============== PHP server  ============
 
+RUN apt update
 RUN apt install -y php-cli php-cgi php-fpm
 
 # ============= PHP End =================

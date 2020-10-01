@@ -19,8 +19,7 @@
 
 # Run the Continer for develeoper
 
-sudo docker run -it --net webr-network --ip 172.18.0.80 -p 80:80/tcp --mount source=nginx-log,target=/var/log/nginx/ --mount source=webserver-log,target=/var/log/webserver-log/ --name webserver_local -v ~
-/searchengine_admin_portal:/var/www --env-file ./env.list -h webserver_local -d webserver_local:v1
+sudo docker run -it --net webr-network --ip 172.18.0.80 -p 8181:80/tcp --mount source=nginx-log,target=/var/log/nginx/ --mount source=webserver-log,target=/var/log/webserver-log/ --name webserver_local -v ~/tetalsearch_admin_portal:/var/www -v ~/tetalsearch_admin_portal/portal_server/webr_api:/webr_api --env-file ./env.list -h webserver_local -d webserver_local:v1
 
 
 # Exec the container
