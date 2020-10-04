@@ -38,7 +38,7 @@ RUN pip3 install uwsgi flask flask_cors flask_pymongo requests redis cerberus ma
 
 VOLUME ["/webr_api"]
 
-COPY ./search_engine/portal_server/webr_api /webr_api
+COPY ./tetalsearch_admin_portal/portal_server/webr_api /webr_api
 
 COPY uwsgi_ini.ini /webr_api/
 
@@ -48,8 +48,8 @@ COPY uwsgi_ini.ini /webr_api/
 # Creating local temp volume
 VOLUME ["/var/www"]
 
-COPY ./searchengine_admin_portal/html /var/www/html
-COPY ./searchengine_admin_portal/pages /var/www/pages
+#COPY ./tetalsearch_admin_portal/html /var/www/html
+#COPY ./tetalsearch_admin_portal/pages /var/www/pages
 
 
 # ============ Nginx Configuration start ===============
