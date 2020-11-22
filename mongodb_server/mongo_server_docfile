@@ -1,6 +1,6 @@
 # Version : 19_05_25
 
-FROM mongo:4.0.12-xenial
+FROM mongo:4.4.2-bionic
 
 MAINTAINER gowtham
 
